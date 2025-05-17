@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Калькулятор гидравлического сопротивления</title>
+    <title>Гидравлическое сопротивление трубопровода</title>
     <style>
         :root {
             --main-color: #2c7be5;
@@ -114,6 +114,11 @@
             color: var(--main-color);
         }
         
+        .result-value.important {
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
         .unit-selector {
             display: flex;
             gap: 10px;
@@ -179,17 +184,15 @@
     <div class="container">
         <div class="calculator">
             <div class="calculator-header">
-                Калькулятор гидравлического сопротивления
+                Гидравлическое сопротивление трубопровода
             </div>
             <div class="calculator-body">
                 <div class="input-group">
                     <label for="pipe-material">Материал трубопровода</label>
                     <select id="pipe-material">
-                        <option value="ppr">Полипропилен (PPR)</option>
+                        <option value="ppr">Полимерная</option>
                         <option value="copper">Медь</option>
                         <option value="stainless">Нержавеющая сталь</option>
-                        <option value="metalplastic">Металлопластик</option>
-                        <option value="pex">Сшитый полиэтилен (PEX)</option>
                     </select>
                 </div>
                 
@@ -221,7 +224,7 @@
                 <div class="input-group">
                     <label>Расход жидкости</label>
                     <div class="unit-selector">
-                        <input type="number" id="flow-rate" step="0.001" min="0" value="10" placeholder="Введите расход">
+                        <input type="number" id="flow-rate" step="0.001" min="0" placeholder="Введите расход">
                         <select id="flow-unit">
                             <option value="m3h">м³/час</option>
                             <option value="lmin">л/мин</option>
@@ -232,12 +235,12 @@
                 
                 <div class="input-group">
                     <label for="diameter">Внутренний диаметр трубопровода, мм</label>
-                    <input type="number" id="diameter" step="0.1" min="0" value="50" placeholder="Введите диаметр">
+                    <input type="number" id="diameter" step="0.1" min="0" placeholder="Введите диаметр">
                 </div>
                 
                 <div class="input-group">
                     <label for="length">Длина трубопровода, м</label>
-                    <input type="number" id="length" step="0.1" min="0" value="100" placeholder="Введите длину">
+                    <input type="number" id="length" step="0.1" min="0" placeholder="Введите длину">
                 </div>
                 
                 <div class="results">
@@ -255,11 +258,11 @@
                     </div>
                     <div class="result-item">
                         <span class="result-label">Потери напора (h<sub>f</sub>)</span>
-                        <span id="headloss-result" class="result-value">-</span>
+                        <span id="headloss-result" class="result-value important">-</span>
                     </div>
                     <div class="result-item">
                         <span class="result-label">Перепад давления (ΔP)</span>
-                        <span id="pressure-result" class="result-value">-</span>
+                        <span id="pressure-result" class="result-value important">-</span>
                     </div>
                 </div>
             </div>
@@ -306,11 +309,9 @@
 
         // Шероховатость материалов труб (в метрах)
         const pipeMaterials = {
-            ppr: 0.000007,      // Полипропилен
-            copper: 0.0000015,   // Медь
-            stainless: 0.000045, // Нержавеющая сталь
-            metalplastic: 0.000007, // Металлопластик
-            pex: 0.000007       // Сшитый полиэтилен
+            ppr: 0.000007,    // Полимерная
+            copper: 0.0000015, // Медь
+            stainless: 0.000045 // Нержавеющая сталь
         };
 
         // Получаем элементы DOM
@@ -454,7 +455,6 @@
         // Инициализация при загрузке
         window.addEventListener('load', function() {
             updateFluidProperties();
-            calculateResistance();
         });
     </script>
 </body>
